@@ -13,7 +13,7 @@
   --accent-soft: #f1ddd4;
   --sage: #6f7f71;
   --sage-soft: #dde6db;
-  --gold: #b68d49;
+  --gold: #85622a; /* 元のモックは #b68d49 だが WCAG AA を満たすため濃度を上げた（背景 #f5efe7 上で 4.87:1） */
   --shadow-sm: 0 14px 36px rgba(88, 63, 44, 0.08);
   --shadow: 0 28px 80px rgba(88, 63, 44, 0.12);
   --shadow-lg: 0 36px 96px rgba(88, 63, 44, 0.16);
