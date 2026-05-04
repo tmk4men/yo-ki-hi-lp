@@ -344,6 +344,36 @@ button, input, textarea { font: inherit; }
   font-weight: 700;
 }
 
+/* hero の取り上げ内容リスト — 句点でなく要素として読める箇条書き */
+.hero-list {
+  position: relative;
+  z-index: 1;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hero-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.hero-list li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.78em;
+  width: 0.7rem;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
 /* hero points 6-card grid */
 .hero-points {
   position: relative;
