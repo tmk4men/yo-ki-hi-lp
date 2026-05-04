@@ -514,6 +514,40 @@ button, input, textarea { font: inherit; }
   padding: 1.7rem;
 }
 
+.theory-points {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.1rem;
+}
+
+.theory-points > li {
+  position: relative;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.theory-points > li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.theory-point-label {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.theory-points > li > p:not(.theory-point-label) {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
 .theory-copy h3,
 .posture-card h3,
 .benefit-card h3,
