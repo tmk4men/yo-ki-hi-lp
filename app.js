@@ -82,6 +82,33 @@
     toast._t = setTimeout(() => toast.classList.remove("is-visible"), 3800);
   }
 
+  // モバイル用スティッキー CTA — Hero と Products の中間でだけ表示
+  const stickyCTA = document.querySelector("[data-sticky-cta]");
+  if (stickyCTA && "IntersectionObserver" in window) {
+    const heroEl = document.querySelector(".hero");
+    const productsEl = document.querySelector("#products");
+    let heroVisible = true;
+    let productsVisible = false;
+
+    const update = () => {
+      const shouldShow = !heroVisible && !productsVisible;
+      stickyCTA.classList.toggle("is-visible", shouldShow);
+    };
+
+    if (heroEl) {
+      new IntersectionObserver(([entry]) => {
+        heroVisible = entry.isIntersecting;
+        update();
+      }, { threshold: 0.18 }).observe(heroEl);
+    }
+    if (productsEl) {
+      new IntersectionObserver(([entry]) => {
+        productsVisible = entry.isIntersecting;
+        update();
+      }, { threshold: 0.05 }).observe(productsEl);
+    }
+  }
+
   // mark current section in nav for #-anchored top page
   const navLinks = document.querySelectorAll(".main-nav a[href^='#']");
   if (navLinks.length && "IntersectionObserver" in window) {
