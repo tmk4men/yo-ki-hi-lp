@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yo-Ki-Hi | 購入ログイン</title>
+    <meta
+      name="description"
+      content="Yo-Ki-Hi 購入ページへ進むためのログインページ。導入店/一般導入者、平森先生の塾生、太田先生の塾生の3区分に対応。"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class='brand' href='/#top'>
+          <span class="brand-mark">Yo-Ki-Hi</span>
+          <span class="brand-sub">purchase login</span>
+        </a>
+
+        <nav class="main-nav" aria-label="メインナビゲーション">
+          <a href='/#theory'>理論</a>
+          <a href='/#inspection'>検査方法</a>
+          <a href='/#ems'>ベルト×EMS</a>
+          <a href='/#selector'>使い分け</a>
+          <a href='/#products'>商品情報</a>
+        </nav>
+
+        <a class='header-cta' href='/#products'>商品ページへ戻る</a>
+      </header>
+
+      <main>
+        <section class="purchase-hero reveal">
+          <div class="purchase-hero-copy card-surface">
+            <p class="eyebrow">Login</p>
+            <h1>購入はこちら</h1>
+            <p class="purchase-lead">
+              案内されたパスワードを入力してください。
+              パスワードに応じた購入ページへお進みいただけます。
+            </p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="purchase-login">
+          <div class="purchase-login-layout">
+            <article class="login-panel card-surface">
+              <div class="section-head compact-head">
+                <p class="section-label">ログイン</p>
+                <h2>パスワードをご入力ください</h2>
+                <p id="audience-description">
+                  ご案内済みのパスワードを入力すると、対象の購入ページへ進みます。
+                </p>
+              </div>
+
+              <form class="purchase-form" data-purchase-form>
+                <label class="field">
+                  <span>パスワード</span>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="パスワードを入力"
+                    autocomplete="current-password"
+                  />
+                </label>
+
+                <div class="field-note">
+                  パスワードをお持ちでない場合は、案内元へお問い合わせください。
+                </div>
+
+                <button class="button button-primary button-wide" type="submit">
+                  購入ページへ進む
+                </button>
+              </form>
+            </article>
+
+            <aside class="access-panel card-surface">
+              <p class="section-label">ご案内</p>
+              <h3>ご利用案内</h3>
+              <p>
+                パスワードをお持ちの方のみご利用いただけます。
+                ご不明な場合は、案内元へご確認ください。
+              </p>
+              <ul class="access-list">
+                <li>導入店/一般導入者</li>
+                <li>平森先生の塾生</li>
+                <li>太田先生の塾生</li>
+              </ul>
+              <div class="preview-result" data-login-result aria-live="polite">
+                パスワードを入力してください。
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Yo-Ki-Hi</p>
+        <p>&copy; <span id="year"></span> Yo-Ki-Hi</p>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+    <script src="./purchase-login.js"></script>
+  </body>
+</html>

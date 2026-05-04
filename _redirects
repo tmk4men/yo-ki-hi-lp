@@ -1,0 +1,8 @@
+# Netlify clean URLs（任意のホスティング先で使う場合のみ有効）
+/purchase-login        /purchase-login.html        200
+/purchase-shop         /purchase-shop.html         200
+/purchase-hiramori     /purchase-hiramori.html     200
+/purchase-ota          /purchase-ota.html          200
+
+# 404 fallback
+/*                     /404.html                   404

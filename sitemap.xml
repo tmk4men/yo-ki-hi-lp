@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  本番デプロイ時に <loc> のドメインを実ドメインに一括置換してください。
+  認証配下の購入ページは noindex 指定済み（robots.txt + meta robots）のためここには含めない。
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yo-ki-hi.example.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

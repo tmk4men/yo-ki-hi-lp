@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /purchase-login.html
+Disallow: /purchase-shop.html
+Disallow: /purchase-hiramori.html
+Disallow: /purchase-ota.html
+
+Allow: /

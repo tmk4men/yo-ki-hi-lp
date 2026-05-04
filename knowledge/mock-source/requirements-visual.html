@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yo-Ki-Hi | 画面連動 要件定義</title>
+    <meta
+      name="description"
+      content="Yo-Ki-Hi モックサイトの画面スクリーンショットと連動した要件定義ページ。"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class='brand' href='/#top'>
+          <span class="brand-mark">Yo-Ki-Hi</span>
+          <span class="brand-sub">requirements</span>
+        </a>
+
+        <nav class="main-nav" aria-label="メインナビゲーション">
+          <a href="#overview">概要</a>
+          <a href="#screens">画面別要件</a>
+          <a href="#mvp">MVP</a>
+          <a href="#materials">素材</a>
+        </nav>
+
+        <a class='header-cta' href='/'>モックを見る</a>
+      </header>
+
+      <main>
+        <section class="requirements-hero" id="overview">
+          <p class="eyebrow">Requirements with Screenshots</p>
+          <h1>骨盤ベルト/インナー関連サイト 要件定義</h1>
+          <p>
+            この資料は、制作中のモック画面と要件を対応させた確認用ページです。
+            セミナー後に先生方へ共有し、理論・検査・装着・使い分け・EMS活用・購入導線を短時間で理解してもらうことを目的にしています。
+          </p>
+
+          <div class="requirements-summary-grid">
+            <article>
+              <span>Target</span>
+              <h2>治療院関係者向け</h2>
+              <p>整骨院、整体院、治療院、サロン、セミナー参加者、現場スタッフが見る業務用の導入支援ページ。</p>
+            </article>
+            <article>
+              <span>MVP</span>
+              <h2>5/24セミナー用</h2>
+              <p>1ページサイト、図解中心、スマホ対応、購入認証ページまでを初期公開範囲にする。</p>
+            </article>
+            <article>
+              <span>Purchase</span>
+              <h2>パスワード分岐</h2>
+              <p>購入ボタンから認証ページへ進み、パスワードに応じて3つの購入ページへ自動分岐する。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="requirements-section" id="screens">
+          <div class="requirements-section-head">
+            <p class="section-label">画面別要件</p>
+            <h2>モック画面と要件の対応</h2>
+          </div>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/01-fv.png" alt="ファーストビューのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">01 / First View</p>
+              <h3>最初に6つの入口を大きく見せる</h3>
+              <p>
+                サイトに入った瞬間に、どの情報が見られるか分かる構成。
+                一般向けLPではなく、導入検討者が必要な情報へすぐ移動できる業務用導線にする。
+              </p>
+              <ul>
+                <li>理論、検査方法、正しい装着方法、使い分け、EMS、商品情報へ直接移動</li>
+                <li>ボタンはスマホでも押しやすい大きさ</li>
+                <li>セミナー後にURLを共有しても迷わない構成</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/02-inspection.png" alt="検査方法セクションのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">02 / Check</p>
+              <h3>効果実感のための検査を主役にする</h3>
+              <p>
+                導入・販売の肝は、商品説明よりも変化を見せる検査。
+                動画は補助として置き、手順とチェックポイントがすぐ分かる形を優先する。
+              </p>
+              <ul>
+                <li>腰の後屈、肩・腕、体幹、ガッツポーズでの安定性を初期版の主軸にする</li>
+                <li>Before/Afterで同じ検査を行う流れを明確にする</li>
+                <li>動画を見る負担を減らし、図解中心で理解できるようにする</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/03-wearing.png" alt="正しい装着方法セクションのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">03 / Wearing</p>
+              <h3>正しい装着位置を独立して説明する</h3>
+              <p>
+                ベルトは位置とベクトルが重要。
+                検査方法とは別に、装着位置、締める強さ、NG例、確認ポイントを見せる。
+              </p>
+              <ul>
+                <li>AIイラストだけでなく、最終版では実物写真・モデル着用写真を入れる</li>
+                <li>高すぎる位置、締めすぎ、ズレやすいケースを補足する</li>
+                <li>販売時や現場説明時にそのまま見せられる内容にする</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/04-selector.png" alt="ベルトとインナーの使い分けセクションのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">04 / Select</p>
+              <h3>ベルトとインナーの提案基準を比較表にする</h3>
+              <p>
+                どちらが良いかではなく、生活スタイルに応じて提案できるようにする。
+                施術後・日常はベルト、運動・長時間はインナーという整理を見せる。
+              </p>
+              <ul>
+                <li>ベルトは初回体感、短時間、施術後の日常サポート向き</li>
+                <li>インナーは運動、長時間、ズレにくさ、継続使用向き</li>
+                <li>仕事中はインナー、帰宅後や就寝時はベルトなど併用提案も可能</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/05-ems.png" alt="EMS活用セクションのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">05 / EMS</p>
+              <h3>EMSとの併用をメニュー提案につなげる</h3>
+              <p>
+                ベルト単体販売ではなく、治療院側の施術メニュー化・単価アップ提案につなげるセクション。
+                10分活用モデルとBefore/After検査を見せる。
+              </p>
+              <ul>
+                <li>Before → EMS+ベルト → After の流れを示す</li>
+                <li>施術現場での使い方、患者さんへの説明例を追加できる構成</li>
+                <li>動画は補助、図解とフローを主役にする</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="screen-spec">
+            <div class="screen-shot">
+              <img src="./assets/requirements-shots/06-auth.png" alt="購入認証ページのスクリーンショット" />
+            </div>
+            <div class="screen-copy">
+              <p class="screen-number">06 / Purchase</p>
+              <h3>購入ボタンからパスワード認証へ進む</h3>
+              <p>
+                初期版では会員登録やメールログインは不要。
+                購入意欲が高い人が迷わないよう、パスワードだけで購入ページへ分岐する。
+              </p>
+              <ul>
+                <li>導入店/一般導入者、平森先生の塾生、太田先生の塾生の3区分</li>
+                <li>実パスワードと購入URLは本番ではサーバー側で判定する</li>
+                <li>代理店・大口販売用は初期版では外し、必要なら後から追加</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="requirements-section" id="mvp">
+          <div class="requirements-section-head">
+            <p class="section-label">MVP / Phase 2</p>
+            <h2>5/24に間に合わせるための切り分け</h2>
+          </div>
+
+          <div class="requirements-two-col">
+            <article>
+              <h3>MVPで入れる</h3>
+              <ul>
+                <li>1ページサイト</li>
+                <li>ファーストビューの6入口</li>
+                <li>理論、検査方法、正しい装着方法</li>
+                <li>ベルト/インナー使い分け</li>
+                <li>EMS活用</li>
+                <li>価格・サイズ・購入</li>
+                <li>購入ボタンから認証ページへ遷移</li>
+                <li>パスワードごとの購入ページ分岐</li>
+              </ul>
+            </article>
+
+            <article>
+              <h3>Phase 2に回す</h3>
+              <ul>
+                <li>メールログイン、会員登録</li>
+                <li>事業者申請、治療院名チェック</li>
+                <li>Googleマップ照合</li>
+                <li>購入者ログ管理</li>
+                <li>LINE連携、自動返信</li>
+                <li>姿勢解析、MediaPipe連携</li>
+                <li>導入院別ページ、FAQ強化</li>
+                <li>印刷用PDFダウンロード</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="requirements-section" id="materials">
+          <div class="requirements-section-head">
+            <p class="section-label">素材・未確定事項</p>
+            <h2>制作前に揃えるもの</h2>
+          </div>
+
+          <div class="requirements-two-col">
+            <article>
+              <h3>必須素材</h3>
+              <ul>
+                <li>商品写真</li>
+                <li>実際の装着写真</li>
+                <li>ベルトの巻き方動画</li>
+                <li>検査方法動画</li>
+                <li>EMS活用動画</li>
+                <li>サイズ表、価格表</li>
+                <li>各区分ごとの購入ページURL</li>
+                <li>商品名の正式表記</li>
+              </ul>
+            </article>
+
+            <article>
+              <h3>未確定事項</h3>
+              <ul>
+                <li>正式商品名、旧名/新名の扱い</li>
+                <li>ベルトとインナーの正式名称</li>
+                <li>区分別価格と購入URL</li>
+                <li>購入ページがShopifyかどうか</li>
+                <li>検査方法4つの正式名称</li>
+                <li>法務表現、薬機法、景表法の確認</li>
+                <li>一般消費者に見られた場合の注意文</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Yo-Ki-Hi Requirements</p>
+        <p><a href="./requirements-summary.md">Markdown版を見る</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

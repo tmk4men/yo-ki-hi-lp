@@ -1,0 +1,20 @@
+{
+  "name": "Yo-Ki-Hi｜pelvis support concept",
+  "short_name": "Yo-Ki-Hi",
+  "description": "整骨院・整体院・治療院・サロン向けの導入支援サイト。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "orientation": "portrait",
+  "background_color": "#f5efe7",
+  "theme_color": "#f5efe7",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
