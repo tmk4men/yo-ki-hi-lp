@@ -10,7 +10,7 @@
   }
 
   const reveals = document.querySelectorAll(".reveal");
-  if (!reduceMotion && "IntersectionObserver" in window) {
+  if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -21,8 +21,10 @@
       },
       { threshold: 0.16, rootMargin: "0px 0px -40px 0px" }
     );
+    const staggerStep = reduceMotion ? 30 : 70;
+    const staggerCap = reduceMotion ? 90 : 260;
     reveals.forEach((el, i) => {
-      el.style.transitionDelay = `${Math.min(i * 70, 260)}ms`;
+      el.style.transitionDelay = `${Math.min(i * staggerStep, staggerCap)}ms`;
       observer.observe(el);
     });
   } else {

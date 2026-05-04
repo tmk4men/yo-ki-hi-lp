@@ -2168,9 +2168,16 @@ button, input, textarea { font: inherit; }
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
-    opacity: 1;
-    transform: none;
+  /* reveal だけは控えめに再生（距離 8px / 280ms）。
+     上の * 指定の !important を上書きするために !important を付ける。 */
+  .js .reveal {
+    transform: translateY(8px);
+    transition:
+      opacity 280ms ease-out !important,
+      transform 280ms ease-out !important;
+  }
+  .js .reveal.is-visible {
+    transform: translateY(0);
   }
 
   html {
