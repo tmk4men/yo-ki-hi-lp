@@ -1,6 +1,6 @@
 /*
   posture.js
-  Yo-Ki-Hi 姿勢分析（β）
+  Yo-Ki-Hi 姿勢分析
   - MediaPipe Pose Landmarker（ブラウザ完結のオンデバイスAI）で骨格33点を検出
   - Before/After の正面写真をアップして、肩・骨盤・頭部の傾き＋上半身シフトを比較
   - 写真は外部送信しない
