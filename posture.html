@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>姿勢分析（β）｜Yo-Ki-Hi</title>
+    <meta
+      name="description"
+      content="Yo-Ki-Hi 骨盤ベルト装着前後の正面写真をブラウザにアップロードして、肩・骨盤・頭部の傾きを自動計測し比較できる姿勢分析ツール。"
+    />
+    <meta name="theme-color" content="#f5efe7" />
+
+    <meta property="og:title" content="Yo-Ki-Hi｜姿勢分析（β）" />
+    <meta property="og:description" content="装着前後の写真から、肩・骨盤・頭部の傾きを数値で比較できるブラウザ完結型ツール。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yo-ki-hi.example.com/posture.html" />
+    <meta property="og:image" content="https://yo-ki-hi.example.com/assets/og-image.svg" />
+    <meta property="og:site_name" content="Yo-Ki-Hi" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yo-Ki-Hi｜姿勢分析（β）" />
+    <meta name="twitter:description" content="装着前後の写真から、肩・骨盤・頭部の傾きを数値で比較できるブラウザ完結型ツール。" />
+    <meta name="twitter:image" content="https://yo-ki-hi.example.com/assets/og-image.svg" />
+
+    <link rel="canonical" href="https://yo-ki-hi.example.com/posture.html" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./posture.css" />
+  </head>
+  <body>
+    <a href="#posture-tool" class="skip-link">本文へスキップ</a>
+
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html#top">
+          <span class="brand-mark">Yo-Ki-Hi</span>
+          <span class="brand-sub">posture analysis · beta</span>
+        </a>
+
+        <nav class="main-nav" aria-label="メインナビゲーション">
+          <a href="./index.html#theory">理論</a>
+          <a href="./index.html#inspection">検査方法</a>
+          <a href="./index.html#wearing">装着方法</a>
+          <a href="./index.html#selector">使い分け</a>
+          <a href="./index.html#ems">ベルト×EMS</a>
+          <a href="./index.html#products">商品情報</a>
+        </nav>
+
+        <a class="header-cta" href="./index.html#top">トップへ戻る</a>
+      </header>
+
+      <main>
+        <section class="purchase-hero">
+          <div class="purchase-hero-copy card-surface">
+            <p class="eyebrow">姿勢分析（β）</p>
+            <h1>装着前と装着後を、<br class="br-sp-only" />数字で比べる。</h1>
+            <p class="purchase-lead">
+              ベルト装着前後の正面写真をアップロードすると、<br class="br-pc-only" />
+              肩・骨盤・頭部の傾きを自動計測し、Before / After を並べて比較します。
+              写真はブラウザ内でのみ処理し、外部送信は一切ありません。
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="posture-tool" aria-labelledby="posture-tool-heading">
+          <div class="section-head compact-head">
+            <p class="section-label">使い方</p>
+            <h2 id="posture-tool-heading">3 ステップで完結</h2>
+            <p>
+              ① 装着前の正面写真をアップ → ② 装着後の正面写真をアップ → ③ 計測値の比較を確認。<br class="br-pc-only" />
+              印刷ボタンで A4 1 枚にまとめて、その場で患者さんにお渡しできます。
+            </p>
+          </div>
+
+          <div class="posture-status-bar" id="status-bar" aria-live="polite">
+            <span class="status-dot" data-state="idle"></span>
+            <span class="status-text" id="status-text">準備完了。Before / After の写真をアップしてください。</span>
+          </div>
+
+          <div class="posture-grid">
+            <article class="posture-card card-surface" data-slot="before">
+              <header class="posture-card-head">
+                <span class="posture-tag">Before</span>
+                <h3>装着前</h3>
+              </header>
+
+              <label class="posture-upload" for="upload-before">
+                <input id="upload-before" type="file" accept="image/*" hidden data-upload="before" />
+                <div class="upload-empty" data-empty="before">
+                  <span class="upload-plus" aria-hidden="true">＋</span>
+                  <span>正面写真をアップロード</span>
+                  <small>JPEG / PNG / HEIC（1〜10MB 程度）</small>
+                </div>
+                <div class="upload-canvas-wrap" data-canvas-wrap="before" hidden>
+                  <canvas data-canvas="before" aria-label="装着前の写真と骨格"></canvas>
+                </div>
+              </label>
+
+              <ul class="metric-list" data-metrics="before" hidden></ul>
+            </article>
+
+            <article class="posture-card card-surface" data-slot="after">
+              <header class="posture-card-head">
+                <span class="posture-tag posture-tag-good">After</span>
+                <h3>装着後</h3>
+              </header>
+
+              <label class="posture-upload" for="upload-after">
+                <input id="upload-after" type="file" accept="image/*" hidden data-upload="after" />
+                <div class="upload-empty" data-empty="after">
+                  <span class="upload-plus" aria-hidden="true">＋</span>
+                  <span>正面写真をアップロード</span>
+                  <small>JPEG / PNG / HEIC（1〜10MB 程度）</small>
+                </div>
+                <div class="upload-canvas-wrap" data-canvas-wrap="after" hidden>
+                  <canvas data-canvas="after" aria-label="装着後の写真と骨格"></canvas>
+                </div>
+              </label>
+
+              <ul class="metric-list" data-metrics="after" hidden></ul>
+            </article>
+          </div>
+
+          <div class="posture-actions no-print">
+            <button class="button button-primary" type="button" id="print-btn" disabled>レポートを印刷 / PDF保存</button>
+            <button class="button button-ghost" type="button" id="reset-btn">クリア</button>
+          </div>
+        </section>
+
+        <section class="section" id="comparison" aria-labelledby="comparison-heading" hidden>
+          <div class="section-head compact-head">
+            <p class="section-label">比較</p>
+            <h2 id="comparison-heading">Before → After の変化</h2>
+            <p>
+              絶対値の差分（°、%）と、改善の有無を表示します。<br class="br-pc-only" />
+              数値が 0 に近づくほど、左右差・前後差が減少していることを意味します。
+            </p>
+          </div>
+
+          <div class="comparison-grid" id="comparison-grid"></div>
+        </section>
+
+        <section class="section" aria-labelledby="how-heading">
+          <div class="section-head compact-head">
+            <p class="section-label">仕様と注意</p>
+            <h2 id="how-heading">仕組みとプライバシー</h2>
+            <p>
+              MediaPipe Pose Landmarker（Google 製、ブラウザ完結のオンデバイス AI）で 33 点の骨格座標を検出し、
+              各指標を計算しています。
+            </p>
+          </div>
+
+          <div class="how-grid">
+            <article class="how-card card-surface">
+              <h3>計測する 4 項目</h3>
+              <ul>
+                <li>肩の傾き（左右）</li>
+                <li>骨盤の傾き（左右）</li>
+                <li>頭部の傾き（耳線）</li>
+                <li>上半身の左右シフト（肩幅比）</li>
+              </ul>
+            </article>
+
+            <article class="how-card card-surface">
+              <h3>撮影のコツ</h3>
+              <ul>
+                <li>2〜3 m 離れて、カメラを腰の高さに</li>
+                <li>頭から足首まで全身をフレームに</li>
+                <li>背景はできるだけシンプルに</li>
+                <li>軽装でシルエットが分かるとより正確</li>
+              </ul>
+            </article>
+
+            <article class="how-card card-surface">
+              <h3>プライバシー</h3>
+              <ul>
+                <li>写真はブラウザ内で処理。外部送信なし</li>
+                <li>計測値も保存していません</li>
+                <li>本ツールは医療機器ではありません</li>
+                <li>施術判断は必ず有資格者が行ってください</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Yo-Ki-Hi｜pelvis support concept</p>
+        <p><a href="./tokushoho.html">特定商取引法に基づく表記</a></p>
+        <p>&copy; <span id="year"></span> Yo-Ki-Hi</p>
+      </footer>
+    </div>
+
+    <script src="./app.js" defer></script>
+    <script type="module" src="./posture.js"></script>
+  </body>
+</html>

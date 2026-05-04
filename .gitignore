@@ -25,3 +25,6 @@ lh-*.json
 .rvB/
 .chk/
 .mock-reference/
+
+# katsu reference (preserved locally only)
+katsu姿勢分析/
