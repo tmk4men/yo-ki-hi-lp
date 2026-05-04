@@ -38,9 +38,11 @@
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-video-id");
       const title = btn.getAttribute("data-video-title") || "YouTube video";
+      const start = btn.getAttribute("data-video-start"); // seconds
       if (!id) return;
       const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      const startParam = start ? `&start=${start}` : "";
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${startParam}`;
       iframe.title = title;
       iframe.loading = "lazy";
       iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";

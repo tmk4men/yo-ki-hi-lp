@@ -28,3 +28,6 @@ lh-*.json
 
 # katsu reference (preserved locally only)
 katsu姿勢分析/
+
+# 画像 source folder (Discord URL shortcuts only — actual photos are in assets/wearing/)
+画像/
