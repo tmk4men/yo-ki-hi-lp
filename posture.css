@@ -43,28 +43,58 @@
   50% { transform: scale(1.35); opacity: 0.55; }
 }
 
-/* ----- two-card grid ----- */
-.posture-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem;
+/* ----- 4-view carousel ----- */
+.posture-carousel {
+  display: flex;
+  gap: 1rem;
   margin-top: 1.4rem;
+  padding: 0.5rem 0.5rem 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(141, 79, 63, 0.32) transparent;
+}
+
+.posture-carousel::-webkit-scrollbar { height: 8px; }
+.posture-carousel::-webkit-scrollbar-track { background: transparent; }
+.posture-carousel::-webkit-scrollbar-thumb {
+  background: rgba(141, 79, 63, 0.28);
+  border-radius: 999px;
 }
 
 .posture-card {
+  flex: 0 0 calc(85% - 0.5rem);
   padding: 1.4rem;
   display: grid;
   gap: 1.1rem;
+  scroll-snap-align: start;
+  border: 1px solid rgba(141, 79, 63, 0.14);
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.96), rgba(248, 242, 235, 0.94));
 }
 
-.posture-card[data-slot="before"] {
-  background: linear-gradient(180deg, rgba(251, 235, 229, 0.86), rgba(255, 252, 248, 0.94));
-  border: 1px solid rgba(141, 79, 63, 0.16);
+@media (min-width: 640px) {
+  .posture-card { flex: 0 0 calc(60% - 0.5rem); }
+}
+@media (min-width: 820px) {
+  .posture-card { flex: 0 0 calc(45% - 0.5rem); }
+}
+@media (min-width: 1080px) {
+  .posture-card { flex: 0 0 calc(25% - 0.75rem); }
 }
 
-.posture-card[data-slot="after"] {
-  background: linear-gradient(180deg, rgba(232, 241, 233, 0.88), rgba(255, 255, 253, 0.94));
-  border: 1px solid rgba(111, 127, 113, 0.18);
+.posture-card[data-slot="front"] {
+  background: linear-gradient(180deg, rgba(250, 238, 232, 0.86), rgba(255, 252, 249, 0.94));
+}
+.posture-card[data-slot="back"] {
+  background: linear-gradient(180deg, rgba(241, 235, 247, 0.86), rgba(255, 254, 252, 0.94));
+}
+.posture-card[data-slot="left"] {
+  background: linear-gradient(180deg, rgba(233, 242, 234, 0.88), rgba(255, 255, 251, 0.94));
+}
+.posture-card[data-slot="right"] {
+  background: linear-gradient(180deg, rgba(237, 243, 248, 0.88), rgba(255, 254, 252, 0.94));
 }
 
 .posture-card-head {
@@ -75,23 +105,29 @@
 
 .posture-card-head h3 {
   margin: 0;
-  font-size: 1.18rem;
-  letter-spacing: 0.01em;
+  font-family: var(--heading-font);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
 }
 
 .posture-tag {
   display: inline-block;
-  padding: 0.22rem 0.7rem;
+  padding: 0.24rem 0.75rem;
   border-radius: 999px;
   background: rgba(141, 79, 63, 0.14);
   color: var(--accent);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.posture-tag-good {
+.posture-card[data-slot="back"] .posture-tag {
+  background: rgba(141, 79, 63, 0.14);
+  color: #5a3f6f;
+}
+.posture-card[data-slot="left"] .posture-tag,
+.posture-card[data-slot="right"] .posture-tag {
   background: rgba(111, 127, 113, 0.2);
   color: #3d5a44;
 }

@@ -68,64 +68,100 @@
         <section class="section" id="posture-tool" aria-labelledby="posture-tool-heading">
           <div class="section-head compact-head">
             <p class="section-label">使い方</p>
-            <h2 id="posture-tool-heading">3 ステップで完結</h2>
+            <h2 id="posture-tool-heading">4 方向から姿勢を計測</h2>
             <ol class="cta-steps cta-steps-inline">
-              <li>装着前の正面写真をアップロード</li>
-              <li>装着後の正面写真をアップロード</li>
-              <li>計測値の比較を確認</li>
+              <li>正面の全身写真をアップロード</li>
+              <li>背面の全身写真をアップロード</li>
+              <li>左側面・右側面の写真をアップロード</li>
+              <li>計測値の確認とレポート印刷</li>
             </ol>
             <p>
-              印刷ボタンで A4 1 枚にまとめて、<br class="br-sp-only" />
+              印刷ボタンで A4 1 枚にまとめて、<br />
               その場で患者さんにお渡しできます。
             </p>
           </div>
 
           <div class="posture-status-bar" id="status-bar" aria-live="polite">
             <span class="status-dot" data-state="idle"></span>
-            <span class="status-text" id="status-text">準備完了。Before / After の写真をアップしてください。</span>
+            <span class="status-text" id="status-text">準備完了。正面・背面・側面左・側面右の写真をアップしてください。</span>
           </div>
 
-          <div class="posture-grid">
-            <article class="posture-card card-surface" data-slot="before">
+          <!-- 4 方向のアップロードをカルーセル（横スクロール）で並べる -->
+          <div class="posture-carousel" role="region" aria-label="姿勢分析の写真アップロード">
+            <article class="posture-card card-surface" data-slot="front">
               <header class="posture-card-head">
-                <span class="posture-tag">Before</span>
-                <h3>装着前</h3>
+                <span class="posture-tag">正面</span>
+                <h3>Front</h3>
               </header>
-
-              <label class="posture-upload" for="upload-before">
-                <input id="upload-before" type="file" accept="image/*" hidden data-upload="before" />
-                <div class="upload-empty" data-empty="before">
+              <label class="posture-upload" for="upload-front">
+                <input id="upload-front" type="file" accept="image/*" hidden data-upload="front" />
+                <div class="upload-empty" data-empty="front">
                   <span class="upload-plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span>
                   <span>正面写真をアップロード</span>
                   <small>JPEG / PNG / HEIC（1〜10MB 程度）</small>
                 </div>
-                <div class="upload-canvas-wrap" data-canvas-wrap="before" hidden>
-                  <canvas data-canvas="before" aria-label="装着前の写真と骨格"></canvas>
+                <div class="upload-canvas-wrap" data-canvas-wrap="front" hidden>
+                  <canvas data-canvas="front" aria-label="正面写真と骨格"></canvas>
                 </div>
               </label>
-
-              <ul class="metric-list" data-metrics="before" hidden></ul>
+              <ul class="metric-list" data-metrics="front" hidden></ul>
             </article>
 
-            <article class="posture-card card-surface" data-slot="after">
+            <article class="posture-card card-surface" data-slot="back">
               <header class="posture-card-head">
-                <span class="posture-tag posture-tag-good">After</span>
-                <h3>装着後</h3>
+                <span class="posture-tag">背面</span>
+                <h3>Back</h3>
               </header>
-
-              <label class="posture-upload" for="upload-after">
-                <input id="upload-after" type="file" accept="image/*" hidden data-upload="after" />
-                <div class="upload-empty" data-empty="after">
+              <label class="posture-upload" for="upload-back">
+                <input id="upload-back" type="file" accept="image/*" hidden data-upload="back" />
+                <div class="upload-empty" data-empty="back">
                   <span class="upload-plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span>
-                  <span>正面写真をアップロード</span>
+                  <span>背面写真をアップロード</span>
                   <small>JPEG / PNG / HEIC（1〜10MB 程度）</small>
                 </div>
-                <div class="upload-canvas-wrap" data-canvas-wrap="after" hidden>
-                  <canvas data-canvas="after" aria-label="装着後の写真と骨格"></canvas>
+                <div class="upload-canvas-wrap" data-canvas-wrap="back" hidden>
+                  <canvas data-canvas="back" aria-label="背面写真と骨格"></canvas>
                 </div>
               </label>
+              <ul class="metric-list" data-metrics="back" hidden></ul>
+            </article>
 
-              <ul class="metric-list" data-metrics="after" hidden></ul>
+            <article class="posture-card card-surface" data-slot="left">
+              <header class="posture-card-head">
+                <span class="posture-tag">側面左</span>
+                <h3>Side L</h3>
+              </header>
+              <label class="posture-upload" for="upload-left">
+                <input id="upload-left" type="file" accept="image/*" hidden data-upload="left" />
+                <div class="upload-empty" data-empty="left">
+                  <span class="upload-plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span>
+                  <span>左側面写真をアップロード</span>
+                  <small>患者の左側がカメラ側</small>
+                </div>
+                <div class="upload-canvas-wrap" data-canvas-wrap="left" hidden>
+                  <canvas data-canvas="left" aria-label="左側面写真と骨格"></canvas>
+                </div>
+              </label>
+              <ul class="metric-list" data-metrics="left" hidden></ul>
+            </article>
+
+            <article class="posture-card card-surface" data-slot="right">
+              <header class="posture-card-head">
+                <span class="posture-tag">側面右</span>
+                <h3>Side R</h3>
+              </header>
+              <label class="posture-upload" for="upload-right">
+                <input id="upload-right" type="file" accept="image/*" hidden data-upload="right" />
+                <div class="upload-empty" data-empty="right">
+                  <span class="upload-plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span>
+                  <span>右側面写真をアップロード</span>
+                  <small>患者の右側がカメラ側</small>
+                </div>
+                <div class="upload-canvas-wrap" data-canvas-wrap="right" hidden>
+                  <canvas data-canvas="right" aria-label="右側面写真と骨格"></canvas>
+                </div>
+              </label>
+              <ul class="metric-list" data-metrics="right" hidden></ul>
             </article>
           </div>
 
@@ -133,20 +169,6 @@
             <button class="button button-primary" type="button" id="print-btn" disabled>レポートを印刷 / PDF保存</button>
             <button class="button button-ghost" type="button" id="reset-btn">クリア</button>
           </div>
-        </section>
-
-        <section class="section" id="comparison" aria-labelledby="comparison-heading" hidden>
-          <div class="section-head compact-head">
-            <p class="section-label">比較</p>
-            <h2 id="comparison-heading">Before <span class="inline-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><polyline points="13 6 19 12 13 18"/></svg></span> After の変化</h2>
-            <p>
-              絶対値の差分（°、%）と、改善の有無を表示します。<br class="br-pc-only" />
-              数値が 0 に近づくほど、<br class="br-sp-only" />
-              左右差・前後差が減少していることを意味します。
-            </p>
-          </div>
-
-          <div class="comparison-grid" id="comparison-grid"></div>
         </section>
 
         <section class="section" aria-labelledby="how-heading">
@@ -162,12 +184,10 @@
 
           <div class="how-grid">
             <article class="how-card card-surface">
-              <h3>計測する 4 項目</h3>
+              <h3>計測する項目</h3>
               <ul>
-                <li>肩の傾き（左右）</li>
-                <li>骨盤の傾き（左右）</li>
-                <li>頭部の傾き（耳線）</li>
-                <li>上半身の左右シフト（肩幅比）</li>
+                <li><strong>正面・背面</strong>：肩・骨盤・頭部の傾き、上半身の左右シフト</li>
+                <li><strong>側面（左／右）</strong>：頭部前方位（FHP）、肩の前方変位、体幹の前後傾、膝の角度</li>
               </ul>
             </article>
 

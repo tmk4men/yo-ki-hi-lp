@@ -1,8 +1,8 @@
 /*
   posture.js
-  Yo-Ki-Hi 姿勢分析
+  Yo-Ki-Hi 姿勢分析（4ビュー版）
   - MediaPipe Pose Landmarker（ブラウザ完結のオンデバイスAI）で骨格33点を検出
-  - Before/After の正面写真をアップして、肩・骨盤・頭部の傾き＋上半身シフトを比較
+  - 正面 / 背面 / 側面左 / 側面右 の4方向の写真をアップして、ビュー別に指標を算出
   - 写真は外部送信しない
 */
 
@@ -21,9 +21,13 @@ const LM = {
   LEFT_EAR: 7, RIGHT_EAR: 8,
   LEFT_SHOULDER: 11, RIGHT_SHOULDER: 12,
   LEFT_HIP: 23, RIGHT_HIP: 24,
+  LEFT_KNEE: 25, RIGHT_KNEE: 26,
+  LEFT_ANKLE: 27, RIGHT_ANKLE: 28,
 };
 
 const RAD = 180 / Math.PI;
+const VIEWS = ["front", "back", "left", "right"];
+const VIEW_LABELS = { front: "正面", back: "背面", left: "側面左", right: "側面右" };
 
 let landmarkerPromise = null;
 async function getLandmarker() {
@@ -44,57 +48,100 @@ async function getLandmarker() {
   return landmarkerPromise;
 }
 
-// ------- metrics ----------
+// ------- helpers ----------
 function tilt(a, b) {
   return Math.atan2(b.y - a.y, b.x - a.x) * RAD;
 }
 function midpoint(a, b) {
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 }
+function innerAngle(a, b, c) {
+  const ab = { x: a.x - b.x, y: a.y - b.y };
+  const cb = { x: c.x - b.x, y: c.y - b.y };
+  const dot = ab.x * cb.x + ab.y * cb.y;
+  const mag = Math.hypot(ab.x, ab.y) * Math.hypot(cb.x, cb.y);
+  if (mag === 0) return 0;
+  const cos = Math.max(-1, Math.min(1, dot / mag));
+  return Math.acos(cos) * RAD;
+}
 function classify(value, warn) {
   return Math.abs(value) >= warn ? "warn" : "ok";
 }
-function round(v) {
-  return Math.round(v * 10) / 10;
-}
+function round(v) { return Math.round(v * 10) / 10; }
 
-function computeFrontMetrics(lm) {
-  const lSh = lm[LM.LEFT_SHOULDER];
-  const rSh = lm[LM.RIGHT_SHOULDER];
-  const lHip = lm[LM.LEFT_HIP];
-  const rHip = lm[LM.RIGHT_HIP];
-  const lEar = lm[LM.LEFT_EAR];
-  const rEar = lm[LM.RIGHT_EAR];
+// ------- view-specific metrics ----------
+function computeMetrics(lm, view) {
+  if (view === "front" || view === "back") {
+    const lSh = lm[LM.LEFT_SHOULDER];
+    const rSh = lm[LM.RIGHT_SHOULDER];
+    const lHip = lm[LM.LEFT_HIP];
+    const rHip = lm[LM.RIGHT_HIP];
+    const lEar = lm[LM.LEFT_EAR];
+    const rEar = lm[LM.RIGHT_EAR];
 
-  // 正面像では画像の左に被写体の右肩が映る → 符号を反転して
-  // 「正の値 = 患者の右側が下がっている」という統一表現にする
-  const shoulderTilt = -tilt(lSh, rSh);
-  const pelvicTilt = -tilt(lHip, rHip);
-  const headTilt = -tilt(lEar, rEar);
+    // 正面像では左右が画像と反転している → 符号調整で
+    // 「正の値 = 患者の右側が下がっている」に統一
+    const sign = view === "front" ? -1 : 1;
+    const shoulderTilt = sign * tilt(lSh, rSh);
+    const pelvicTilt = sign * tilt(lHip, rHip);
+    const headTilt = sign * tilt(lEar, rEar);
 
-  const midSh = midpoint(lSh, rSh);
-  const midHip = midpoint(lHip, rHip);
-  const shoulderWidth = Math.hypot(rSh.x - lSh.x, rSh.y - lSh.y) || 1;
-  const lateralShift = -((midSh.x - midHip.x) / shoulderWidth) * 100;
+    const midSh = midpoint(lSh, rSh);
+    const midHip = midpoint(lHip, rHip);
+    const shoulderWidth = Math.hypot(rSh.x - lSh.x, rSh.y - lSh.y) || 1;
+    const lateralShift = sign * ((midSh.x - midHip.x) / shoulderWidth) * 100;
+
+    return [
+      { key: "shoulder_tilt", label: "肩の傾き", value: round(shoulderTilt), unit: "°",
+        hint: shoulderTilt > 0 ? "右肩が下がり" : "左肩が下がり",
+        severity: classify(shoulderTilt, 2) },
+      { key: "pelvic_tilt", label: "骨盤の傾き", value: round(pelvicTilt), unit: "°",
+        hint: pelvicTilt > 0 ? "右骨盤が下がり" : "左骨盤が下がり",
+        severity: classify(pelvicTilt, 2) },
+      { key: "head_tilt", label: "頭部の傾き", value: round(headTilt), unit: "°",
+        hint: headTilt > 0 ? "右側へ傾斜" : "左側へ傾斜",
+        severity: classify(headTilt, 3) },
+      { key: "lateral_shift", label: "上半身の左右シフト", value: round(lateralShift), unit: "%",
+        hint: lateralShift > 0 ? "右へシフト" : "左へシフト",
+        severity: classify(lateralShift, 5) },
+    ];
+  }
+
+  // 側面（左 / 右）
+  const isLeft = view === "left";
+  const ear = isLeft ? lm[LM.LEFT_EAR] : lm[LM.RIGHT_EAR];
+  const sh = isLeft ? lm[LM.LEFT_SHOULDER] : lm[LM.RIGHT_SHOULDER];
+  const hip = isLeft ? lm[LM.LEFT_HIP] : lm[LM.RIGHT_HIP];
+  const knee = isLeft ? lm[LM.LEFT_KNEE] : lm[LM.RIGHT_KNEE];
+  const ankle = isLeft ? lm[LM.LEFT_ANKLE] : lm[LM.RIGHT_ANKLE];
+
+  const torsoHeight = Math.abs(hip.y - sh.y) || 1;
+  // 左面ビューは患者左がカメラ側 → 前方は -x。右面は +x。
+  const facingSign = isLeft ? -1 : 1;
+  const fhpRatio = ((ear.x - sh.x) * facingSign) / torsoHeight * 100;
+  const shoulderForward = ((sh.x - hip.x) * facingSign) / torsoHeight * 100;
+  const trunkAngle = Math.atan2(sh.x - hip.x, hip.y - sh.y) * RAD;
+  const trunkAdjusted = trunkAngle * facingSign;
+  const kneeAngle = innerAngle(hip, knee, ankle);
 
   return [
-    { key: "shoulder_tilt", label: "肩の傾き", value: round(shoulderTilt), unit: "°",
-      hint: shoulderTilt > 0 ? "右肩が下がり" : "左肩が下がり",
-      severity: classify(shoulderTilt, 2) },
-    { key: "pelvic_tilt", label: "骨盤の傾き", value: round(pelvicTilt), unit: "°",
-      hint: pelvicTilt > 0 ? "右骨盤が下がり" : "左骨盤が下がり",
-      severity: classify(pelvicTilt, 2) },
-    { key: "head_tilt", label: "頭部の傾き", value: round(headTilt), unit: "°",
-      hint: headTilt > 0 ? "右側へ傾斜" : "左側へ傾斜",
-      severity: classify(headTilt, 3) },
-    { key: "lateral_shift", label: "上半身の左右シフト", value: round(lateralShift), unit: "% (肩幅比)",
-      hint: lateralShift > 0 ? "右へシフト" : "左へシフト",
-      severity: classify(lateralShift, 5) },
+    { key: "forward_head", label: "頭部前方位 (FHP)", value: round(fhpRatio), unit: "%",
+      hint: fhpRatio > 0 ? "頭が前方" : "頭が後方",
+      severity: classify(fhpRatio, 10) },
+    { key: "shoulder_forward", label: "肩の前方変位", value: round(shoulderForward), unit: "%",
+      hint: shoulderForward > 0 ? "肩が前方（巻き肩傾向）" : "肩が後方",
+      severity: classify(shoulderForward, 8) },
+    { key: "trunk_lean", label: "体幹の前後傾", value: round(trunkAdjusted), unit: "°",
+      hint: trunkAdjusted > 0 ? "前傾" : "後傾",
+      severity: classify(trunkAdjusted, 5) },
+    { key: "knee_angle", label: "膝の角度", value: round(kneeAngle), unit: "°",
+      hint: kneeAngle >= 178 ? "過伸展傾向" : kneeAngle >= 170 ? "正常範囲" : "屈曲位",
+      severity: kneeAngle >= 178 || kneeAngle < 165 ? "warn" : "ok" },
   ];
 }
 
 // ------- canvas drawing ---------
-function drawPoseOnCanvas(canvas, image, landmarks) {
+function drawPoseOnCanvas(canvas, image, landmarks, view) {
   const ctx = canvas.getContext("2d");
   const w = image.naturalWidth;
   const h = image.naturalHeight;
@@ -106,15 +153,26 @@ function drawPoseOnCanvas(canvas, image, landmarks) {
 
   const px = (lm) => ({ x: lm.x * w, y: lm.y * h });
 
-  const skeleton = [
-    [LM.LEFT_SHOULDER, LM.RIGHT_SHOULDER],
-    [LM.LEFT_HIP, LM.RIGHT_HIP],
-    [LM.LEFT_SHOULDER, LM.LEFT_HIP],
-    [LM.RIGHT_SHOULDER, LM.RIGHT_HIP],
-    [LM.LEFT_EAR, LM.RIGHT_EAR],
-  ];
+  const isFront = view === "front" || view === "back";
+  const skeleton = isFront
+    ? [
+        [LM.LEFT_SHOULDER, LM.RIGHT_SHOULDER],
+        [LM.LEFT_HIP, LM.RIGHT_HIP],
+        [LM.LEFT_SHOULDER, LM.LEFT_HIP],
+        [LM.RIGHT_SHOULDER, LM.RIGHT_HIP],
+        [LM.LEFT_EAR, LM.RIGHT_EAR],
+      ]
+    : [
+        [view === "left" ? LM.LEFT_EAR : LM.RIGHT_EAR,
+         view === "left" ? LM.LEFT_SHOULDER : LM.RIGHT_SHOULDER],
+        [view === "left" ? LM.LEFT_SHOULDER : LM.RIGHT_SHOULDER,
+         view === "left" ? LM.LEFT_HIP : LM.RIGHT_HIP],
+        [view === "left" ? LM.LEFT_HIP : LM.RIGHT_HIP,
+         view === "left" ? LM.LEFT_KNEE : LM.RIGHT_KNEE],
+        [view === "left" ? LM.LEFT_KNEE : LM.RIGHT_KNEE,
+         view === "left" ? LM.LEFT_ANKLE : LM.RIGHT_ANKLE],
+      ];
 
-  // base bone color
   ctx.strokeStyle = "rgba(255, 247, 242, 0.85)";
   ctx.lineWidth = Math.max(3, w / 320);
   ctx.lineCap = "round";
@@ -128,25 +186,25 @@ function drawPoseOnCanvas(canvas, image, landmarks) {
     ctx.stroke();
   }
 
-  // shoulder line — accent
-  ctx.strokeStyle = "rgba(141, 79, 63, 0.95)";
-  ctx.lineWidth = Math.max(4, w / 240);
-  const ls = px(landmarks[LM.LEFT_SHOULDER]);
-  const rs = px(landmarks[LM.RIGHT_SHOULDER]);
-  ctx.beginPath(); ctx.moveTo(ls.x, ls.y); ctx.lineTo(rs.x, rs.y); ctx.stroke();
-
-  // hip line — gold
-  ctx.strokeStyle = "rgba(182, 141, 73, 0.95)";
-  const lh = px(landmarks[LM.LEFT_HIP]);
-  const rh = px(landmarks[LM.RIGHT_HIP]);
-  ctx.beginPath(); ctx.moveTo(lh.x, lh.y); ctx.lineTo(rh.x, rh.y); ctx.stroke();
+  // 正面・背面 → 肩線をアクセント色、骨盤線をゴールドで
+  if (isFront) {
+    ctx.strokeStyle = "rgba(141, 79, 63, 0.95)";
+    ctx.lineWidth = Math.max(4, w / 240);
+    const ls = px(landmarks[LM.LEFT_SHOULDER]);
+    const rs = px(landmarks[LM.RIGHT_SHOULDER]);
+    ctx.beginPath(); ctx.moveTo(ls.x, ls.y); ctx.lineTo(rs.x, rs.y); ctx.stroke();
+    ctx.strokeStyle = "rgba(133, 98, 42, 0.95)";
+    const lh = px(landmarks[LM.LEFT_HIP]);
+    const rh = px(landmarks[LM.RIGHT_HIP]);
+    ctx.beginPath(); ctx.moveTo(lh.x, lh.y); ctx.lineTo(rh.x, rh.y); ctx.stroke();
+  }
 
   // joints
-  const dots = [
-    LM.LEFT_SHOULDER, LM.RIGHT_SHOULDER,
-    LM.LEFT_HIP, LM.RIGHT_HIP,
-    LM.LEFT_EAR, LM.RIGHT_EAR, LM.NOSE,
-  ];
+  const dots = isFront
+    ? [LM.LEFT_SHOULDER, LM.RIGHT_SHOULDER, LM.LEFT_HIP, LM.RIGHT_HIP, LM.LEFT_EAR, LM.RIGHT_EAR, LM.NOSE]
+    : (view === "left"
+        ? [LM.LEFT_EAR, LM.LEFT_SHOULDER, LM.LEFT_HIP, LM.LEFT_KNEE, LM.LEFT_ANKLE]
+        : [LM.RIGHT_EAR, LM.RIGHT_SHOULDER, LM.RIGHT_HIP, LM.RIGHT_KNEE, LM.RIGHT_ANKLE]);
   ctx.fillStyle = "#fff7f2";
   for (const idx of dots) {
     const p = px(landmarks[idx]);
@@ -157,17 +215,12 @@ function drawPoseOnCanvas(canvas, image, landmarks) {
 }
 
 // ------- UI ---------
-const state = {
-  before: { metrics: null, image: null },
-  after: { metrics: null, image: null },
-  warmedUp: false,
-};
+const state = Object.fromEntries(VIEWS.map((v) => [v, { metrics: null, image: null }]));
+state.warmedUp = false;
 
 const els = {
   status: document.getElementById("status-text"),
   statusDot: document.querySelector(".status-dot"),
-  comparisonSection: document.getElementById("comparison"),
-  comparisonGrid: document.getElementById("comparison-grid"),
   printBtn: document.getElementById("print-btn"),
   resetBtn: document.getElementById("reset-btn"),
 };
@@ -197,58 +250,10 @@ function renderMetricList(slot, metrics) {
   }
 }
 
-function fmtValue(v, unit) {
-  return `${v > 0 ? "+" : ""}${v}${unit}`;
-}
-
-function renderComparison() {
-  if (!state.before.metrics || !state.after.metrics) {
-    els.comparisonSection.hidden = true;
-    return;
-  }
-  els.comparisonSection.hidden = false;
-  els.comparisonGrid.innerHTML = "";
-
-  const byKey = (arr, key) => arr.find((m) => m.key === key);
-
-  for (const m of state.before.metrics) {
-    const after = byKey(state.after.metrics, m.key);
-    if (!after) continue;
-    const beforeAbs = Math.abs(m.value);
-    const afterAbs = Math.abs(after.value);
-    const delta = round(afterAbs - beforeAbs); // 負ならゼロに近づいた = 改善
-    const improved = delta < -0.05;
-    const worsened = delta > 0.05;
-
-    const cls = improved ? "is-improved" : worsened ? "is-worsened" : "";
-    const verdict = improved
-      ? `<strong>改善</strong>：絶対値が ${Math.abs(delta)}${m.unit.replace(/^\(.*?\)/, "").trim() || ""} 減少`
-      : worsened
-        ? `<strong>増加</strong>：絶対値が ${Math.abs(delta)}${m.unit.replace(/^\(.*?\)/, "").trim() || ""} 拡大`
-        : `<strong>変化なし</strong>：差分 ${Math.abs(delta)}${m.unit.replace(/^\(.*?\)/, "").trim() || ""}`;
-
-    const div = document.createElement("div");
-    div.className = `compare-row ${cls}`.trim();
-    div.innerHTML = `
-      <p class="c-label">${m.label}</p>
-      <div class="c-row">
-        <span class="c-before">${fmtValue(m.value, m.unit)}</span>
-        <span class="c-arrow" aria-hidden="true"></span>
-        <span class="c-after">${fmtValue(after.value, after.unit)}</span>
-      </div>
-      <p class="c-delta">${verdict}</p>
-    `;
-    els.comparisonGrid.appendChild(div);
-  }
-
-  els.printBtn.disabled = false;
-}
-
 async function processSlot(slot, file) {
   if (!file) return;
-  setStatus(`${slot === "before" ? "Before" : "After"} の写真を読み込み中…`, "loading");
+  setStatus(`${VIEW_LABELS[slot]} の写真を読み込み中…`, "loading");
 
-  // load to image element
   const imgUrl = URL.createObjectURL(file);
   const img = new Image();
   img.decoding = "async";
@@ -271,7 +276,7 @@ async function processSlot(slot, file) {
     }
   }
 
-  setStatus("骨格を検出しています…", "loading");
+  setStatus(`${VIEW_LABELS[slot]} の骨格を検出しています…`, "loading");
 
   let detection = null;
   try {
@@ -288,31 +293,33 @@ async function processSlot(slot, file) {
   }
 
   if (!detection) {
-    setStatus(`${slot === "before" ? "Before" : "After"} の写真から骨格を検出できませんでした。全身が映っているか確認してください。`, "error");
+    setStatus(`${VIEW_LABELS[slot]} の写真から骨格を検出できませんでした。全身が映っているか確認してください。`, "error");
     URL.revokeObjectURL(imgUrl);
     return;
   }
 
-  // show canvas and draw
   const empty = document.querySelector(`[data-empty="${slot}"]`);
   const wrap = document.querySelector(`[data-canvas-wrap="${slot}"]`);
   const canvas = document.querySelector(`[data-canvas="${slot}"]`);
   empty.hidden = true;
   wrap.hidden = false;
-  drawPoseOnCanvas(canvas, img, detection);
+  drawPoseOnCanvas(canvas, img, detection, slot);
 
-  const metrics = computeFrontMetrics(detection);
+  const metrics = computeMetrics(detection, slot);
   renderMetricList(slot, metrics);
   state[slot] = { metrics, image: img };
 
   URL.revokeObjectURL(imgUrl);
 
-  if (state.before.metrics && state.after.metrics) {
-    setStatus("計測完了。Before / After の比較が下部に表示されています。", "ok");
-    renderComparison();
+  // 進捗を表示
+  const filled = VIEWS.filter((v) => state[v].metrics).length;
+  if (filled === VIEWS.length) {
+    setStatus("4 方向すべての計測完了。レポート印刷でその場でお渡しできます。", "ok");
+    els.printBtn.disabled = false;
   } else {
-    const next = slot === "before" ? "After" : "Before";
-    setStatus(`${slot === "before" ? "Before" : "After"} の計測完了。続けて ${next} の写真もアップロードしてください。`, "ok");
+    const remaining = VIEWS.filter((v) => !state[v].metrics).map((v) => VIEW_LABELS[v]).join("・");
+    setStatus(`${VIEW_LABELS[slot]} の計測完了（${filled}/${VIEWS.length}）。続けて ${remaining} の写真もアップしてください。`, "ok");
+    els.printBtn.disabled = filled === 0;
   }
 }
 
@@ -326,7 +333,6 @@ function bindUpload(slot) {
     if (file) processSlot(slot, file);
   });
 
-  // drag & drop
   ["dragenter", "dragover"].forEach((ev) => {
     label.addEventListener(ev, (e) => { e.preventDefault(); empty.classList.add("is-drag"); });
   });
@@ -340,27 +346,23 @@ function bindUpload(slot) {
 }
 
 function reset() {
-  state.before = { metrics: null, image: null };
-  state.after = { metrics: null, image: null };
-  ["before", "after"].forEach((slot) => {
-    const empty = document.querySelector(`[data-empty="${slot}"]`);
-    const wrap = document.querySelector(`[data-canvas-wrap="${slot}"]`);
-    const list = document.querySelector(`[data-metrics="${slot}"]`);
-    const input = document.querySelector(`[data-upload="${slot}"]`);
+  for (const v of VIEWS) {
+    state[v] = { metrics: null, image: null };
+    const empty = document.querySelector(`[data-empty="${v}"]`);
+    const wrap = document.querySelector(`[data-canvas-wrap="${v}"]`);
+    const list = document.querySelector(`[data-metrics="${v}"]`);
+    const input = document.querySelector(`[data-upload="${v}"]`);
     empty.hidden = false;
     wrap.hidden = true;
     list.hidden = true;
     list.innerHTML = "";
     input.value = "";
-  });
-  els.comparisonSection.hidden = true;
-  els.comparisonGrid.innerHTML = "";
+  }
   els.printBtn.disabled = true;
   setStatus("クリアしました。新しい写真をアップロードしてください。", "idle");
 }
 
 // ------- init ---------
-bindUpload("before");
-bindUpload("after");
+VIEWS.forEach(bindUpload);
 els.resetBtn.addEventListener("click", reset);
 els.printBtn.addEventListener("click", () => window.print());
