@@ -1123,6 +1123,93 @@ button, input, textarea { font: inherit; }
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+/* シーン別おすすめ — ベルト/インナーで2グループに集約した版 */
+.scene-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.scene-summary-card {
+  padding: 1.4rem 1.5rem 1.5rem;
+  border-radius: 1.4rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+.scene-summary-card.scene-summary-belt {
+  background: linear-gradient(180deg, rgba(250, 238, 232, 0.86), rgba(255, 252, 249, 0.94));
+  border-color: rgba(141, 79, 63, 0.18);
+}
+
+.scene-summary-card.scene-summary-inner {
+  background: linear-gradient(180deg, rgba(233, 242, 234, 0.88), rgba(255, 255, 251, 0.94));
+  border-color: rgba(111, 127, 113, 0.18);
+}
+
+.scene-summary-tag {
+  display: inline-block;
+  margin: 0;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.scene-summary-inner .scene-summary-tag {
+  color: #3d5a44;
+}
+
+.scene-summary-card h3 {
+  margin: 0.7rem 0 0.55rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.scene-summary-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.scene-summary-card li {
+  position: relative;
+  padding-left: 1.3rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.scene-summary-card li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.78em;
+  width: 0.65rem;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.scene-summary-inner li::before { background: var(--sage); }
+
+@media (max-width: 640px) {
+  .scene-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
 .scene-chip {
   padding: 1.05rem 0.95rem;
   text-align: center;
