@@ -140,9 +140,11 @@
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(141, 79, 63, 0.14), rgba(182, 141, 73, 0.18));
   color: var(--accent);
-  font-family: var(--heading-font);
-  font-size: 1.6rem;
-  font-weight: 700;
+}
+
+.upload-plus svg {
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 .upload-canvas-wrap {
