@@ -1547,6 +1547,34 @@ button, input, textarea { font: inherit; }
   display: block;
 }
 
+/* EMS 実施手順の写真2枚組 */
+.ems-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+}
+
+.ems-photo {
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+
+.ems-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: #f6efe6;
+}
+
+@media (max-width: 720px) {
+  .ems-photo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* products */
 .product-card {
   position: relative;
