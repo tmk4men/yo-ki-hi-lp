@@ -9,9 +9,12 @@
 
 (() => {
   const passwordRoutes = {
-    "shop-demo":     { label: "導入店／一般導入者",   url: "./purchase-shop.html" },
-    "hiramori-demo": { label: "平森先生の塾生",       url: "./purchase-hiramori.html" },
-    "ota-demo":      { label: "太田先生の塾生",       url: "./purchase-ota.html" },
+    "shop-demo":     { label: "導入店",                 url: "./purchase-shop.html" },
+    "ota-demo":      { label: "有料の太田式骨格矯正塾生", url: "./purchase-ota.html" },
+    "hiramori-demo": { label: "平森塾生",                url: "./purchase-hiramori.html" },
+    // パートナー専用ページは未作成のため、暫定的に導入店ページへ誘導します。
+    // 専用ページが用意できたら url を差し替えてください。
+    "partner-demo":  { label: "パートナー",              url: "./purchase-shop.html" },
   };
 
   const form = document.querySelector("[data-purchase-form]");
