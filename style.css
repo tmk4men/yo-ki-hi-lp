@@ -387,8 +387,9 @@ button, input, textarea { font: inherit; }
   position: relative;
   z-index: 1;
   max-width: 52rem;
-  margin: 1.35rem 0 0;
+  margin: 1.35rem auto 0;
   font-size: 1.05rem;
+  text-align: center;
 }
 
 .hero-guide {
@@ -398,9 +399,10 @@ button, input, textarea { font: inherit; }
   color: var(--accent);
   font-size: 0.95rem;
   font-weight: 700;
+  text-align: center;
 }
 
-/* hero の取り上げ内容リスト — 句点でなく要素として読める箇条書き */
+/* hero の取り上げ内容リスト — 中央揃え */
 .hero-list {
   position: relative;
   z-index: 1;
@@ -409,25 +411,20 @@ button, input, textarea { font: inherit; }
   list-style: none;
   display: grid;
   gap: 0.45rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .hero-list li {
   position: relative;
-  padding-left: 1.4rem;
+  padding: 0;
   color: var(--ink-soft);
   line-height: 1.7;
   font-size: 1rem;
 }
 
 .hero-list li::before {
-  content: "";
-  position: absolute;
-  left: 0.15rem;
-  top: 0.78em;
-  width: 0.7rem;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.7;
+  content: none;
 }
 
 /* hero points 6-card grid */
