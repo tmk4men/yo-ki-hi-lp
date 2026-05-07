@@ -19,7 +19,7 @@
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.16, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0, rootMargin: "0px 0px 120px 0px" }
     );
     const staggerStep = reduceMotion ? 30 : 70;
     const staggerCap = reduceMotion ? 90 : 260;
