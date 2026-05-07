@@ -21,7 +21,7 @@
   --heading-font: "Iowan Old Style", "Palatino Linotype", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
   --body-font: "Avenir Next", "Hiragino Sans", "Yu Gothic", "Helvetica Neue", sans-serif;
   --max-width: 1180px;
-  --section-gap: clamp(2.6rem, 5vw, 4.6rem);
+  --section-gap: clamp(1.8rem, 3.6vw, 3rem);
 }
 
 *,
@@ -217,7 +217,7 @@ button, input, textarea { font: inherit; }
 /* hero */
 .hero {
   display: block;
-  padding: 3.2rem 0 1.2rem;
+  padding: 2.2rem 0 0;
 }
 
 /* visually hidden（スクリーンリーダー用） */
@@ -235,7 +235,7 @@ button, input, textarea { font: inherit; }
 
 /* ヘッダー画像（ベルト＋インナーパンツの 2 枚組） */
 .hero-hero-image {
-  margin: 0 0 1.6rem;
+  margin: 0 0 0.8rem;
   border-radius: var(--radius-lg, 18px);
   overflow: hidden;
   background: rgba(255, 255, 255, 0.5);
