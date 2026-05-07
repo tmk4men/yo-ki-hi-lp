@@ -1877,6 +1877,14 @@ button, input, textarea { font: inherit; }
   gap: 1.2rem;
 }
 
+/* パスワード入力廃止後、単独カードを中央寄せ・幅制限 */
+.purchase-login-layout-solo {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .login-panel,
 .access-panel {
   padding: 1.7rem;

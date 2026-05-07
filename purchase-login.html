@@ -15,17 +15,17 @@
     <meta property="og:description" content="案内されたパスワードを入力すると、対象の購入ページへお進みいただけます。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tmk4men.github.io/yo-ki-hi-lp/purchase-login.html" />
-    <meta property="og:image" content="https://tmk4men.github.io/yo-ki-hi-lp/assets/og-image.jpg?v=20260508j" />
+    <meta property="og:image" content="https://tmk4men.github.io/yo-ki-hi-lp/assets/og-image.jpg?v=20260508k" />
     <meta property="og:site_name" content="Yo-Ki-Hi" />
     <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Yo-Ki-Hi｜購入ログイン" />
     <meta name="twitter:description" content="案内されたパスワードを入力すると、対象の購入ページへお進みいただけます。" />
-    <meta name="twitter:image" content="https://tmk4men.github.io/yo-ki-hi-lp/assets/og-image.jpg?v=20260508j" />
+    <meta name="twitter:image" content="https://tmk4men.github.io/yo-ki-hi-lp/assets/og-image.jpg?v=20260508k" />
 
     <link rel="canonical" href="https://tmk4men.github.io/yo-ki-hi-lp/purchase-login.html" />
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
-    <link rel="stylesheet" href="./style.css?v=20260508j" />
+    <link rel="stylesheet" href="./style.css?v=20260508k" />
   </head>
   <body>
     <a href="#purchase-login" class="skip-link">本文へスキップ</a>
@@ -54,60 +54,24 @@
       <main>
         <section class="purchase-hero reveal">
           <div class="purchase-hero-copy card-surface">
-            <p class="eyebrow">Login</p>
+            <p class="eyebrow">Purchase Guide</p>
             <h1>購入はこちら</h1>
             <p class="purchase-lead">
-              案内されたパスワードを入力してください。<br class="br-pc-only" />
-              入力されたパスワードに応じた<br class="br-sp-only" />
-              購入ページへお進みいただけます。
+              ご利用対象と<br class="br-sp-only" />
+              お問い合わせ先をご案内しています。<br class="br-pc-only" />
+              ご不明な点はお問い合わせフォームから<br class="br-sp-only" />
+              お気軽にご連絡ください。
             </p>
           </div>
         </section>
 
         <section class="section reveal" id="purchase-login">
-          <div class="purchase-login-layout">
-            <article class="login-panel card-surface">
-              <div class="section-head compact-head">
-                <p class="section-label">ログイン</p>
-                <h2>パスワードをご入力ください</h2>
-                <p>
-                  ご案内済みのパスワードを入力していただくと、<br class="br-pc-only" />
-                  対象の購入ページへ進みます。
-                </p>
-              </div>
-
-              <form class="purchase-form" data-purchase-form novalidate>
-                <label class="field" for="password-input">
-                  <span>パスワード</span>
-                  <input
-                    id="password-input"
-                    type="password"
-                    name="password"
-                    placeholder="パスワードを入力"
-                    autocomplete="current-password"
-                    inputmode="text"
-                    spellcheck="false"
-                    required
-                  />
-                </label>
-
-                <p class="field-note">
-                  パスワードをお持ちでない場合は、<br class="br-sp-only" />
-                  ご案内元へお問い合わせください。
-                </p>
-
-                <button class="button button-primary button-wide" type="submit">
-                  購入ページへ進む
-                </button>
-              </form>
-            </article>
-
+          <div class="purchase-login-layout purchase-login-layout-solo">
             <aside class="access-panel card-surface" aria-labelledby="access-heading">
               <p class="section-label">ご案内</p>
               <h3 id="access-heading">ご利用案内</h3>
               <p>
-                パスワードをお持ちの方のみ<br class="br-sp-only" />
-                ご利用いただけます。<br class="br-pc-only" />
+                以下の対象の方にご利用いただけます。<br class="br-pc-only" />
                 ご不明な場合は、ご案内元へご確認ください。
               </p>
               <ul class="access-list">
@@ -116,10 +80,6 @@
                 <li>平森塾生</li>
                 <li>パートナー</li>
               </ul>
-
-              <div class="preview-result" data-login-result aria-live="polite">
-                パスワードを入力してください。
-              </div>
 
               <!--
                 ▼ お問い合わせフォーム（後日設定）
@@ -150,7 +110,9 @@
       </footer>
     </div>
 
-    <script src="./app.js?v=20260508j" defer></script>
-    <script src="./purchase-login.js?v=20260508j" defer></script>
+    <script src="./app.js?v=20260508k" defer></script>
+    <!-- パスワード入力廃止に伴い purchase-login.js は読込停止。再有効化時はこの行を復活してください。
+    <script src="./purchase-login.js?v=20260508k" defer></script>
+    -->
   </body>
 </html>
