@@ -894,6 +894,60 @@ button, input, textarea { font: inherit; }
   color: var(--accent);
 }
 
+/* 検査項目: 動画下に横並び、入りきらない分は横スクロールで */
+.video-card-solo {
+  margin-top: 1.4rem;
+  padding: 1.7rem;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checklist-carousel {
+  display: flex;
+  gap: 1rem;
+  margin: 1.4rem 0 0;
+  padding: 0.4rem 0.4rem 1rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0.4rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(141, 79, 63, 0.32) transparent;
+}
+
+.checklist-carousel::-webkit-scrollbar { height: 6px; }
+.checklist-carousel::-webkit-scrollbar-track { background: transparent; }
+.checklist-carousel::-webkit-scrollbar-thumb {
+  background: rgba(141, 79, 63, 0.28);
+  border-radius: 999px;
+}
+
+.checklist-carousel .check-card {
+  flex: 0 0 calc(85% - 0.5rem);
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .checklist-carousel .check-card {
+    flex: 0 0 calc(50% - 0.5rem);
+  }
+}
+
+@media (min-width: 980px) {
+  .checklist-carousel .check-card {
+    flex: 0 0 calc(33.333% - 0.667rem);
+  }
+}
+
+@media (min-width: 1180px) {
+  .checklist-carousel .check-card {
+    flex: 0 0 calc(25% - 0.75rem);
+  }
+}
+
 /* ベルト着用前/着用/外しの 3 ステップフロー（重要ガイド） */
 .inspection-flow {
   margin-top: 2rem;
