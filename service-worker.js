@@ -4,7 +4,7 @@
   - 認証ページはキャッシュさせない
 */
 
-const VERSION = "yokihi-v20260508d";
+const VERSION = "yokihi-v20260508e";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
@@ -18,6 +18,9 @@ const STATIC_ASSETS = [
   "/assets/inspection-method.png",
   "/assets/ems-supine.jpg",
   "/assets/ems-pads.jpg",
+  "/assets/hero-belt.jpg",
+  "/assets/hero-inner.jpg",
+  "/assets/size-chart.jpg",
 ];
 
 const NEVER_CACHE = [

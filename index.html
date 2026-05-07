@@ -31,7 +31,7 @@
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
     <link rel="preconnect" href="https://www.youtube-nocookie.com" />
     <link rel="preconnect" href="https://i.ytimg.com" />
-    <link rel="stylesheet" href="./style.css?v=20260508d" />
+    <link rel="stylesheet" href="./style.css?v=20260508e" />
     <link rel="manifest" href="./manifest.webmanifest" />
 
     <script type="application/ld+json">
@@ -102,20 +102,30 @@
         <section class="hero reveal" aria-labelledby="hero-heading">
           <h1 id="hero-heading" class="visually-hidden">Yo-Ki-Hi｜骨盤を立てるという起点</h1>
 
-          <!-- ▼ ヘッダー画像（差し替え用プレースホルダ） -->
-          <!-- 画像が用意できたら、下の <figure class="hero-hero-image"> 内の中身を画像タグに差し替えてください。
-               例:
-               <figure class="hero-hero-image">
-                 <img src="./assets/hero-header.webp" alt="Yo-Ki-Hi ヘッダー画像" loading="eager" decoding="async" />
-               </figure>
-          -->
-          <figure class="hero-hero-image" aria-label="ヘッダー画像（後日差し替え）">
-            <div class="hero-hero-image-placeholder" aria-hidden="true">
-              <span>HEADER IMAGE</span>
-              <small>ここにヘッダー画像が入ります</small>
+          <!-- ▼ ヘッダー画像（ベルト＋インナーパンツの 2 枚組） -->
+          <figure class="hero-hero-image hero-hero-pair" aria-label="Yo-Ki-Hi 着用イメージ：骨盤ベルトとインナーパンツ">
+            <div class="hero-hero-card">
+              <img
+                src="./assets/hero-belt.jpg"
+                alt="Yo-Ki-Hi 骨盤ベルトを装着した女性の正面着用イメージ"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+              <span class="hero-hero-badge">Belt</span>
+            </div>
+            <div class="hero-hero-card">
+              <img
+                src="./assets/hero-inner.jpg"
+                alt="Yo-Ki-Hi インナーパンツを着用した女性の全身イメージ"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+              <span class="hero-hero-badge">Inner pants</span>
             </div>
           </figure>
-          <!-- ▲ ヘッダー画像（差し替え用プレースホルダ） -->
+          <!-- ▲ ヘッダー画像 -->
 
           <div class="hero-copy card-surface">
             <p class="hero-text">
@@ -947,6 +957,23 @@
             </article>
           </div>
 
+          <figure class="size-chart-figure card-surface">
+            <img
+              src="./assets/size-chart.jpg"
+              alt="骨盤ベルト（SM 70–95cm／ML 90–115cm）と、インナーパンツ（KID'S・3S・SS・S・M・L・LL）のサイズ目安。骨盤サイズはヒップラインで計測。"
+              loading="lazy"
+            />
+            <figcaption class="guide-copy">
+              <p class="guide-label">サイズ表</p>
+              <h3>骨盤ベルト／インナーパンツのサイズ目安</h3>
+              <p>
+                骨盤サイズはヒップラインで計測します。<br class="br-pc-only" />
+                インナーパンツはウエストと身長を目安に、<br class="br-sp-only" />
+                該当サイズをお選びください。
+              </p>
+            </figcaption>
+          </figure>
+
         </section>
       </main>
 
@@ -963,6 +990,6 @@
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><polyline points="13 6 19 12 13 18"/></svg>
     </a>
 
-    <script src="./app.js?v=20260508d" defer></script>
+    <script src="./app.js?v=20260508e" defer></script>
   </body>
 </html>
