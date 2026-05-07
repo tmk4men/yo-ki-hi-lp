@@ -1532,6 +1532,21 @@ button, input, textarea { font: inherit; }
   margin-top: 1.4rem;
 }
 
+/* 検査セクション・装着セクションの参考図カード（ems-figure と同じ振る舞い） */
+.inspection-poster,
+.wearing-poster {
+  margin-top: 1.4rem;
+  overflow: hidden;
+}
+
+.inspection-poster img,
+.wearing-poster img {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  display: block;
+}
+
 /* products */
 .product-card {
   position: relative;
