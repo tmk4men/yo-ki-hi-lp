@@ -18,12 +18,15 @@
   };
 
   const form = document.querySelector("[data-purchase-form]");
+  if (!form) return;
+
+  // preview-result は撤去された場合でも動作するよう、null 許容にする
   const result = document.querySelector("[data-login-result]");
-  if (!form || !result) return;
 
   const input = form.elements.password;
 
   const setStatus = (text, kind) => {
+    if (!result) return;
     result.textContent = text;
     result.classList.remove("is-success", "is-error");
     if (kind) result.classList.add(kind);
@@ -62,7 +65,7 @@
   });
 
   input?.addEventListener("input", () => {
-    if (result.classList.contains("is-error")) {
+    if (result && result.classList.contains("is-error")) {
       setStatus("パスワードを入力してください。", null);
     }
   });
