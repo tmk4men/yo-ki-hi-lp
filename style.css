@@ -1169,6 +1169,75 @@ button, input, textarea { font: inherit; }
   }
 }
 
+/* wearing — 5サブセクション */
+.wearing-block {
+  position: relative;
+  margin-top: 1.4rem;
+  padding: 1.7rem 1.6rem 1.5rem;
+  border-radius: 1.6rem;
+}
+
+.wearing-block-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 0 0.6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.wearing-block h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1.18rem;
+  letter-spacing: 0.02em;
+}
+
+.wearing-block-figure {
+  margin: 0 0 1rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.wearing-block-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.wearing-ng-list,
+.wearing-points-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.wearing-ng-list li,
+.wearing-points-list li {
+  padding: 0.7rem 0.95rem;
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.wearing-ng-list li {
+  border-left: 3px solid var(--accent);
+}
+
+.wearing-points-list li {
+  border-left: 3px solid var(--gold, #b08948);
+}
+
 /* 横スクロール・スワイプで切り替えるカルーセル */
 .wearing-gallery {
   display: flex;
