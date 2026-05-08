@@ -1686,7 +1686,11 @@ button, input, textarea { font: inherit; }
 /* 検査セクション・装着セクション・商品情報の参考図カード（ems-figure と同じ振る舞い） */
 .inspection-poster,
 .wearing-poster,
+.ems-figure,
 .size-chart-figure {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 1.4rem;
   overflow: hidden;
 }
