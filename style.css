@@ -1199,7 +1199,8 @@ button, input, textarea { font: inherit; }
 }
 
 .wearing-block-figure {
-  margin: 0 0 1rem;
+  max-width: 320px;
+  margin: 0 auto 1rem;
   border-radius: 1.2rem;
   overflow: hidden;
   background: #fff;

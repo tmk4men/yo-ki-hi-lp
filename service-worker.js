@@ -4,7 +4,7 @@
   - 認証ページはキャッシュさせない
 */
 
-const VERSION = "yokihi-v20260508u";
+const VERSION = "yokihi-v20260508v";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
