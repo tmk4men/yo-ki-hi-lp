@@ -1771,6 +1771,14 @@ button, input, textarea { font: inherit; }
   margin-top: 1.4rem;
 }
 
+/* メール1カードのみ表示するときのレイアウト（電話撤去後） */
+.contact-grid-solo {
+  grid-template-columns: 1fr;
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .contact-card {
   position: relative;
   padding: 1.7rem;
