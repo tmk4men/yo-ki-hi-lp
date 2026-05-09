@@ -1795,6 +1795,20 @@ button, input, textarea { font: inherit; }
   line-height: 1.85;
 }
 
+.contact-mail {
+  color: var(--accent-deep);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  word-break: break-all;
+  border-bottom: 1px solid rgba(141, 79, 63, 0.28);
+}
+
+.contact-mail:hover,
+.contact-mail:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .contact-examples {
   margin-top: 1.4rem;
   padding: 1.8rem;
