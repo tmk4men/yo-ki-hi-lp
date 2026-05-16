@@ -4,7 +4,7 @@
   - 認証ページはキャッシュさせない
 */
 
-const VERSION = "yokihi-v20260510d";
+const VERSION = "yokihi-v20260516a";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
@@ -24,11 +24,9 @@ const STATIC_ASSETS = [
 ];
 
 const NEVER_CACHE = [
-  "/purchase-login.html",
   "/purchase-shop.html",
   "/purchase-hiramori.html",
   "/purchase-ota.html",
-  "/purchase-login.js",
 ];
 
 self.addEventListener("install", (event) => {
